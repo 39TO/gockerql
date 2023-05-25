@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  server:
+    container_name: hack-camp_vol9_2022-server
+    restart: always
+    tty: true
+
+  database:
+    container_name: hack-camp_vol9_2022-database
+    restart: always
+    tty: true
