@@ -2,11 +2,11 @@ version: "3"
 
 services:
   server:
-    container_name: hack-camp_vol9_2022-server
+    container_name: gockerql-server
     restart: always
     tty: true
 
   database:
-    container_name: hack-camp_vol9_2022-database
+    container_name: gockerql-database
     restart: always
     tty: true
