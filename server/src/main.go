@@ -15,5 +15,5 @@ func doMain() {
 			"msg": "hello world",
 		})
 	})
-	r.Run(":8082")
+	r.Run(":8080")
 }

@@ -30,7 +30,7 @@ up: ## docker環境を立ち上げる
 	$(ENV_LOCAL) docker-compose \
 	-f $(DOCKER_COMPOSE_LOCAL) \
 	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up -d
 
 .PHONY: down
 down: ## dockerイメージを削除し、docker環境を閉じる
@@ -45,6 +45,12 @@ fclean:down del-volumes ## マウントしたデータを削除、またdocker�
 
 .PHONY: re
 re:fclean up ## 完全に初期化した状態でdocker環境を立ち上げる
+
+.PHONY: logs
+logs: ## dockerのログを表示する
+	docker-compose \
+	-f $(DOCKER_COMPOSE_LOCAL) \
+	-f $(DOCKER_COMPOSE_LOCAL_SERVER) logs -f
 
 .PHONY: del-volumes
 del-volumes:del-data
@@ -62,8 +68,9 @@ attach-db: ## dockerのdbコンテナにアクセスする
 lint: ## goのコードを整形する
 	cd $(SRC_DIR) && gofmt -l -w .
 
-.PHONY: deploy
-deploy:
+.PHONY: tidy
+tidy:
+	cd $(SRC_DIR) && go mod tidy
 
 
 .PHONY: help
