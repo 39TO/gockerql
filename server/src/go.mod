@@ -2,9 +2,14 @@ module github.com/39TO/gockerql
 
 go 1.20
 
-require github.com/gin-gonic/gin v1.9.0
+require (
+	github.com/99designs/gqlgen v0.17.31
+	github.com/gin-gonic/gin v1.9.0
+	github.com/vektah/gqlparser/v2 v2.5.1
+)
 
 require (
+	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
