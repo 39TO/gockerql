@@ -48,8 +48,9 @@ re:fclean up ## 完全に初期化した状態でdocker環境を立ち上げる
 
 .PHONY: logs
 logs: ## dockerのログを表示する
-	docker-compose \
+	$(ENV_LOCAL) docker-compose \
 	-f $(DOCKER_COMPOSE_LOCAL) \
+	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
 	-f $(DOCKER_COMPOSE_LOCAL_SERVER) logs -f
 
 .PHONY: del-volumes
