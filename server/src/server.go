@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/39TO/gockerql/graph"
+	"github.com/39TO/gockerql/infrastructure/database"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 )
@@ -13,6 +14,12 @@ import (
 const defaultPort = "8080"
 
 func main() {
+	db, err := database.NewDB()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
