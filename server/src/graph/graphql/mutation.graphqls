@@ -1,0 +1,5 @@
+extend type Mutation {
+  createTodo(input: NewTodoInput!): Todo!
+  deleteTodo(input: DeleteTodoInput!): Boolean!
+  createUser(name: String!): User!
+}

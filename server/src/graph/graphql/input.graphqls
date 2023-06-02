@@ -1,0 +1,8 @@
+input NewTodoInput {
+  title: String!
+  userId: ID!
+}
+
+input DeleteTodoInput {
+  id: ID!
+}
