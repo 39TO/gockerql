@@ -14,7 +14,17 @@ import (
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodoInput) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
+	todo, err := r.Todo.uc.CreateTodo(input.Title, input.UserID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Todo{
+		ID:    todo.Id,
+		Title: todo.Title,
+		Done:  todo.Done,
+	}, nil
 }
 
 // DeleteTodo is the resolver for the deleteTodo field.
