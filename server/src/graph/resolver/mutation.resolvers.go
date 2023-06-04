@@ -32,9 +32,20 @@ func (r *mutationResolver) DeleteTodo(ctx context.Context, input model.DeleteTod
 	panic(fmt.Errorf("not implemented: DeleteTodo - deleteTodo"))
 }
 
-// CreateUser is the resolver for the createUser field.
-func (r *mutationResolver) CreateUser(ctx context.Context, name string) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: CreateUser - createUser"))
+// RegisterUser is the resolver for the registerUser field.
+func (r *mutationResolver) RegisterUser(ctx context.Context, input model.NewUserInput) (*model.User, error) {
+	user, err := r.User.uc.RegisterUser(input.Name, input.Email, input.Password)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.User{
+		ID:       user.Id,
+		Name:     user.Name,
+		Email:    user.Email,
+		Password: user.Password,
+	}, nil
 }
 
 // Mutation returns graph.MutationResolver implementation.

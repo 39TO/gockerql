@@ -11,6 +11,12 @@ type NewTodoInput struct {
 	UserID string `json:"userId"`
 }
 
+type NewUserInput struct {
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 type Todo struct {
 	ID    string `json:"id"`
 	Title string `json:"title"`
@@ -19,6 +25,9 @@ type Todo struct {
 }
 
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+	Confirmed bool   `json:"confirmed"`
 }

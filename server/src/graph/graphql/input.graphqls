@@ -1,3 +1,4 @@
+# Todo
 input NewTodoInput {
   title: String!
   userId: ID!
@@ -5,4 +6,11 @@ input NewTodoInput {
 
 input DeleteTodoInput {
   id: ID!
+}
+
+# User
+input NewUserInput {
+  name: String!
+  email: String!
+  password: String!
 }
