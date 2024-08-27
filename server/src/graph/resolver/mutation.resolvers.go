@@ -14,7 +14,7 @@ import (
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodoInput) (*model.Todo, error) {
-	todo, err := r.Todo.uc.CreateTodo(input.Title, input.UserID)
+	todo, err := r.ucTodo.CreateTodo(input.Title, input.UserID)
 
 	if err != nil {
 		return nil, err
@@ -34,7 +34,7 @@ func (r *mutationResolver) DeleteTodo(ctx context.Context, input model.DeleteTod
 
 // RegisterUser is the resolver for the registerUser field.
 func (r *mutationResolver) RegisterUser(ctx context.Context, input model.NewUserInput) (*model.User, error) {
-	user, err := r.User.uc.RegisterUser(input.Name, input.Email, input.Password)
+	user, err := r.ucUser.RegisterUser(input.Name, input.Email, input.Password)
 
 	if err != nil {
 		return nil, err

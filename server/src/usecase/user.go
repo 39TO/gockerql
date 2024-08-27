@@ -15,6 +15,7 @@ type UserUsecase struct {
 
 type IUserUsecase interface {
 	RegisterUser(name string, email string, password string) (*entity.User, error)
+	FindUserById(id string) (*entity.User, error)
 }
 
 func NewUserUsecase(repo repository.IUserRepository) IUserUsecase {
@@ -40,5 +41,14 @@ func (uc *UserUsecase) RegisterUser(name string, email string, password string) 
 	}
 
 	user, err := uc.repo.RegisterUser(name, email, string(hashedPassword))
+	return user, err
+}
+
+func (usecase *UserUsecase) FindUserById(id string) (*entity.User, error) {
+	if id == "" {
+		return nil, usecase_error.IdEmptyError
+	}
+
+	user, err := usecase.repo.FindUserById(id)
 	return user, err
 }

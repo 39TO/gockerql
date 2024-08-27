@@ -48,3 +48,24 @@ func (repo *userRepository) RegisterUser(name string, email string, password str
 
 	return user, nil
 }
+
+func (repo *userRepository) FindUserById(id string) (*entity.User, error) {
+	statement := "SELECT * FROM users WHERE id = ?"
+
+	stmt, err := repo.db.Prepare(statement)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id)
+
+	user := &entity.User{}
+	err = row.Scan(&user.Id, &user.Name, &user.Email, &user.Password)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

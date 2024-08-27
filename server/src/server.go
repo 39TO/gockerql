@@ -31,17 +31,12 @@ func main() {
 	// todoの依存性注入
 	repoTodo := persistance.NewTodoRepository(db)
 	ucTodo := usecase.NewTodoUsecase(repoTodo)
-	rvTodo := resolver.NewTodoResolver(ucTodo)
 
 	// userの依存性注入
 	repoUser := persistance.NewUserRepository(db)
 	ucUser := usecase.NewUserUsecase(repoUser)
-	rvUser := resolver.NewUserResolver(ucUser)
 
-	resolver := resolver.Resolver{
-		Todo: rvTodo,
-		User: rvUser,
-	}
+	resolver := resolver.NewResolver(ucTodo, ucUser)
 
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &resolver}))
 

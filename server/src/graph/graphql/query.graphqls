@@ -1,5 +1,7 @@
 extend type Query {
+  # Todo
   todo(id: ID!): Todo
-  todos: [Todo!]!
-  users: [User!]!
+  todos(userId: ID): [Todo!]!
+  # User
+  user(id: ID!): User
 }

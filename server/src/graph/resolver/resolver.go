@@ -7,26 +7,13 @@ import "github.com/39TO/gockerql/usecase"
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	Todo *TodoResolver
-	User *UserResolver
+	ucTodo usecase.ITodoUsecase
+	ucUser usecase.IUserUsecase
 }
 
-type TodoResolver struct {
-	uc usecase.ITodoUsecase
-}
-
-type UserResolver struct {
-	uc usecase.IUserUsecase
-}
-
-func NewTodoResolver(uc usecase.ITodoUsecase) *TodoResolver {
-	return &TodoResolver{
-		uc: uc,
-	}
-}
-
-func NewUserResolver(uc usecase.IUserUsecase) *UserResolver {
-	return &UserResolver{
-		uc: uc,
+func NewResolver(ucTodo usecase.ITodoUsecase, ucUser usecase.IUserUsecase) Resolver {
+	return Resolver{
+		ucTodo: ucTodo,
+		ucUser: ucUser,
 	}
 }

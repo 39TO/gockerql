@@ -72,3 +72,58 @@ func (repo *TodoRepository) DeleteTodo(id string) error {
 
 	return nil
 }
+
+func (repo *TodoRepository) FindTodoById(id string) (*entity.Todo, error) {
+	statement := "SELECT id, title, done FROM todos WHERE id = ?"
+
+	stmt, err := repo.db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+		return nil, fmt.Errorf("%v : %v", db_error.StatementError, err)
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(id)
+
+	todo := &entity.Todo{}
+	err = row.Scan(&todo.Id, &todo.Title, &todo.Done)
+
+	if err != nil {
+		log.Println(err)
+		return nil, fmt.Errorf("%v : %v", db_error.ExecError, err)
+	}
+
+	return todo, nil
+}
+
+func (repo *TodoRepository) FindTodosByUserId(user_id string) ([]entity.Todo, error) {
+	statement := "SELECT id, title, done FROM todos WHERE user_id = ?"
+
+	stmt, err := repo.db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+		return nil, fmt.Errorf("%v : %v", db_error.StatementError, err)
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(user_id)
+
+	if err != nil {
+		log.Println(err)
+		return nil, fmt.Errorf("%v : %v", db_error.ExecError, err)
+	}
+	defer rows.Close()
+
+	todos := []entity.Todo{}
+	for rows.Next() {
+		todo := entity.Todo{}
+		err := rows.Scan(&todo.Id, &todo.Title, &todo.Done)
+		if err != nil {
+			log.Println(err)
+			return nil, fmt.Errorf("%v : %v", db_error.ExecError, err)
+		}
+		todos = append(todos, todo)
+	}
+
+	return todos, nil
+}

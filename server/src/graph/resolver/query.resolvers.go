@@ -6,7 +6,6 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/39TO/gockerql/graph"
 	"github.com/39TO/gockerql/graph/model"
@@ -14,17 +13,37 @@ import (
 
 // Todo is the resolver for the todo field.
 func (r *queryResolver) Todo(ctx context.Context, id string) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todo - todo"))
+	todo, _ := r.ucTodo.FindTodoById(id)
+	return &model.Todo{
+		ID:    todo.Id,
+		Title: todo.Title,
+		Done:  todo.Done,
+	}, nil
 }
 
 // Todos is the resolver for the todos field.
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todos - todos"))
+func (r *queryResolver) Todos(ctx context.Context, userID *string) ([]*model.Todo, error) {
+	todos, _ := r.ucTodo.FindTodosByUserId(*userID)
+	todosModel := make([]*model.Todo, len(todos))
+	for i, todo := range todos {
+		todosModel[i] = &model.Todo{
+			ID:    todo.Id,
+			Title: todo.Title,
+			Done:  todo.Done,
+		}
+	}
+	return todosModel, nil
 }
 
-// Users is the resolver for the users field.
-func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: Users - users"))
+// User is the resolver for the user field.
+func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
+	user, _ := r.ucUser.FindUserById(id)
+	return &model.User{
+		ID:       user.Id,
+		Name:     user.Name,
+		Email:    user.Email,
+		Password: user.Password,
+	}, nil
 }
 
 // Query returns graph.QueryResolver implementation.

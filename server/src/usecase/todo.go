@@ -15,6 +15,8 @@ type TodoUsecase struct {
 type ITodoUsecase interface {
 	CreateTodo(title string, user_id string) (*entity.Todo, error)
 	DeleteTodo(id string) error
+	FindTodoById(id string) (*entity.Todo, error)
+	FindTodosByUserId(user_id string) ([]entity.Todo, error)
 }
 
 func NewTodoUsecase(repo repository.ITodoRepository) ITodoUsecase {
@@ -42,4 +44,22 @@ func (usecase *TodoUsecase) DeleteTodo(id string) error {
 
 	err := usecase.repo.DeleteTodo(id)
 	return err
+}
+
+func (usecase *TodoUsecase) FindTodoById(id string) (*entity.Todo, error) {
+	if id == "" {
+		return nil, usecase_error.IdEmptyError
+	}
+
+	todo, err := usecase.repo.FindTodoById(id)
+	return todo, err
+}
+
+func (usecase *TodoUsecase) FindTodosByUserId(user_id string) ([]entity.Todo, error) {
+	if user_id == "" {
+		return nil, usecase_error.IdEmptyError
+	}
+
+	todos, err := usecase.repo.FindTodosByUserId(user_id)
+	return todos, err
 }
